@@ -1,0 +1,23 @@
+#include "mbed.h"
+
+//se premo il pulsante il blinking del led avviene con f=30hz, se non premo il pulsante il blinking ogni 10hz.
+DigitalIn bottone(BUTTON1);
+DigitalOut led1(LED1);
+#define Tempo1 100;   //10hz sono 100ms 
+#define TempoPush 33;    //30hz sono 33ms
+// main() runs in its own thread in the OS
+int main()
+{
+    while (true) {
+        while (bottone == 0){ //qui possiamo anche mettere !bottone perchè funziona in logica negata, quando è premuto è uguale a 0
+            led1.write(1);
+            thread_sleep_for(TempoPush);
+            led1.write(0);
+            thread_sleep_for(TempoPush);
+        }
+        led1.write(1);
+        thread_sleep_for(Tempo1);
+        led1.write(0);
+        thread_sleep_for(Tempo1);
+    }
+}
